@@ -10,6 +10,6 @@ database:
     - ./database/init:/docker-entrypoint-initdb.d/
 
 rs-api:
-  build: ./rs-api
-  ports:
-    - '3080:8080'
+ build: ./rs-api
+ ports:
+   - '3080:8080'

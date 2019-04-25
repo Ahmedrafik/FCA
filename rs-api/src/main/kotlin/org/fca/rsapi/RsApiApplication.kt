@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class RsApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<RsApiApplication>(*args)
+	runApplication<RsApiApplication>(*args)
 }
-

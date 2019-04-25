@@ -1,6 +1,9 @@
 ### Intellij ###
 .idea/*
+*.iws
 *.iml
+*.ipr
+/out/
 
 ### Java ###
 *.class
@@ -12,5 +15,6 @@
 
 ### Gradle ###
 .gradle
-/build/
+*/build/*
+!gradle/wrapper/gradle-wrapper.jar
 
