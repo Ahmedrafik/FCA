@@ -1,4 +1,5 @@
 ### Intellij ###
+*/.idea/*
 .idea/*
 *.iws
 *.iml
@@ -18,3 +19,5 @@
 */build/*
 !gradle/wrapper/gradle-wrapper.jar
 
+*** Dump SQL ###
+*/*/*dump*

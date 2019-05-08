@@ -1,15 +1,22 @@
-database:
-  image: postgres:11.1
-  ports:
-    - '5432:5432'
-  environment:
-    POSTGRES_USER: 'user'
-    POSTGRES_PASSWORD: 'password'
-    POSTGRES_DB: 'fca'
-  volumes:
-    - ./database/init:/docker-entrypoint-initdb.d/
+version: "2"
+services:
+  fca.database:
+    image: postgres:11.1
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'fca'
+    volumes:
+      - ./database/init:/docker-entrypoint-initdb.d/
 
-rs-api:
- build: ./rs-api
- ports:
-   - '3080:8080'
+  fca.rs-api:
+    build:
+      context: ./rs-api
+    ports:
+      - '3080:8080'
+    depends_on:
+      - fca.database
+    links:
+      - fca.database
