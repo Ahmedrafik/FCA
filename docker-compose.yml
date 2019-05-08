@@ -15,7 +15,7 @@ services:
     build:
       context: ./rs-api
     ports:
-      - '3080:8080'
+      - '8080:8080'
     depends_on:
       - fca.database
     links:
