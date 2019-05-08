@@ -11,18 +11,22 @@ data class Userfca (
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
         val userid: Long,
 
-        val login: String = "",
+        val login: String,
 
-        val email: String ="",
+        val email: String,
 
-        val pass: String ="",
+        val pass: String,
 
-        val firstname: String,
+        val firstname: String?,
 
-        val lastname: String,
+        val lastname: String?,
 
-        val upper: String,
+        val upper: Long?,
 
-        val profilePic: String
+        val profilePic: String?,
+
+        var accessToken: String?
+
+
 
 )

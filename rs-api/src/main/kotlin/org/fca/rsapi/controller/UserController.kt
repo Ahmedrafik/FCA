@@ -1,5 +1,6 @@
 package org.fca.rsapi.controller
 
+import org.fca.rsapi.helpers.UserHelper
 import org.fca.rsapi.model.Userfca
 import org.fca.rsapi.repository.UserRepository
 import org.springframework.http.HttpStatus
@@ -16,10 +17,24 @@ class UserController (private val userRepository: UserRepository) {
             userRepository.findAll()
 
 
-    @PostMapping("/users")
+    @PostMapping("/user")
     fun createNewUser(@Valid @RequestBody user: Userfca): Userfca =
             userRepository.save(user)
 
+    @PutMapping("/validuser/{id}")
+    fun validUser(@PathVariable(value = "id") userId: Long): Userfca {
+        val userList = userRepository.findAll()
+        val user: Userfca = userRepository.findById(userId).get()
+        var accessToken = ""
+        while(accessToken.isEmpty() || UserHelper.containsAccessToken(userList, accessToken)){
+            accessToken = UserHelper.generateRandomToken()
+        }
+        user.accessToken = accessToken
+
+        return userRepository.save(user)
+
+
+    }
 
     @GetMapping("/users/{id}")
     fun getUserById(@PathVariable(value = "id") userId: Long): ResponseEntity<Userfca> {

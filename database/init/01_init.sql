@@ -1,12 +1,13 @@
 create table userfca (
-  userid     serial PRIMARY KEY,
+  userid      serial PRIMARY KEY,
   login       varchar(50) not null,
   email       varchar(100) not null,
   pass        varchar(50) not null,
   firstname   varchar(100),
   lastname    varchar(100),
   upper       integer references userfca (userid),
-  profilepic  integer
+  profilepic  integer,
+  accesstoken varchar(50)
 );
 
 create table fuzi
