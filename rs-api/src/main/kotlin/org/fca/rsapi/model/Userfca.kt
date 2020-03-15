@@ -9,13 +9,13 @@ import javax.persistence.Id
 data class Userfca (
 
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val userid: Long,
+        val userid: Long?,
 
         val login: String,
 
-        val email: String,
+        val email: String?,
 
-        val pass: String,
+        var pass: String?,
 
         val firstname: String?,
 

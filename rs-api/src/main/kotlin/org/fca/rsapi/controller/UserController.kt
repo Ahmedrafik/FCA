@@ -43,6 +43,40 @@ class UserController (private val userRepository: UserRepository) {
         }.orElse(ResponseEntity.notFound().build())
     }
 
+    @PostMapping("/getuser")
+    fun getUserByLogin(@Valid @RequestBody user: Userfca): Userfca? {
+        var resUser : Userfca? = null
+        val userList = userRepository.findAll()
+        for(crtUser in userList){
+            if(user.login == crtUser.login && user.pass == crtUser.pass){
+                resUser = crtUser
+                resUser.pass = null
+                break
+            }
+        }
+        if (resUser == null) {
+            throw Exception("Le login/pass entré ne correspondent à aucun utilisateur validé.")
+        }
+        return resUser
+    }
+
+    @PostMapping("/verifyToken")
+    fun getUserByToken(@Valid @RequestBody token: String): Userfca? {
+        var resUser : Userfca? = null
+        val userList = userRepository.findAll()
+        for(crtUser in userList){
+            if(token == crtUser.accessToken){
+                resUser = crtUser
+                resUser.pass = null
+                break
+            }
+        }
+        if (resUser == null) {
+            throw Exception("Le token entré ne correspondent à aucun utilisateur validé.")
+        }
+        return resUser
+    }
+
     @PutMapping("/users/{id}")
     fun updateUserById(@PathVariable(value = "id") userId: Long,
                        @Valid @RequestBody newUser: Userfca): ResponseEntity<Userfca> {
