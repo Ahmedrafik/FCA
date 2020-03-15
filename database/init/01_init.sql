@@ -2,7 +2,7 @@ create table userfca (
   userid      serial PRIMARY KEY,
   login       varchar(50) not null,
   email       varchar(100) not null,
-  pass        varchar(50) not null,
+  pass        varchar(100) not null,
   firstname   varchar(100),
   lastname    varchar(100),
   upper       integer references userfca (userid),
