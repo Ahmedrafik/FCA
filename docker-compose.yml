@@ -11,12 +11,12 @@ services:
     volumes:
       - ./database/init:/docker-entrypoint-initdb.d/
 
-  fca.rs-api:
-    build:
-      context: ./rs-api
-    ports:
-      - '8080:8080'
-    depends_on:
-      - fca.database
-    links:
-      - fca.database
+#  fca.rs-api:
+#    build:
+#      context: ./rs-api
+#    ports:
+#      - '8080:8080'
+#    depends_on:
+#      - fca.database
+#    links:
+#      - fca.database

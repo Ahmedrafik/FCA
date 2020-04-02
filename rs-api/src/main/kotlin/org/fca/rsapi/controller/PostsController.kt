@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/api/user")
-class UserController (private val userRepository: UserRepository) {
+@RequestMapping("/api/posts")
+class PostsController (private val userRepository: UserRepository) {
 
     @GetMapping("/")
-    fun getAllUsers(): List<Userfca> =
+    fun getAllPost(): List<Userfca> =
             userRepository.findAll()
 
 

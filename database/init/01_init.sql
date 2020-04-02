@@ -1,12 +1,11 @@
 create table userfca (
-  userid      serial PRIMARY KEY,
+  userId      serial PRIMARY KEY,
   login       varchar(50) not null,
   email       varchar(100) not null,
   pass        varchar(100) not null,
   firstname   varchar(100),
   lastname    varchar(100),
   upper       integer references userfca (userid),
-  profilepic  integer,
   accesstoken varchar(50)
 );
 
@@ -30,7 +29,7 @@ create table picture(
   album       integer references album(albumid)
 );
 
-create table post(
+create table posts(
   postid   serial primary key,
   title     varchar(50),
   body      text,
@@ -40,7 +39,7 @@ create table post(
 
 create table postpics(
   postpicsid  serial primary key,
-  postid       integer references post(postid),
+  postid       integer references posts(postid),
   picsid       integer references picture(pictureid)
 );
 
@@ -51,7 +50,7 @@ create table event(
   place       varchar(100),
   description text,
   eventpics  integer,
-  eventpost  integer references post(postid)
+  eventpost  integer references posts(postid)
 );
 
 create table position(
