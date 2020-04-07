@@ -7,13 +7,13 @@ import javax.persistence.*
 data class Position (
 
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val positionid: Long?,
+        val positionId: Long?,
 
         val longitude: String,
 
         val latitude: String?,
 
         @OneToOne(mappedBy = "position")
-        val userfca: Userfca
+        val positionUser: Userfca
 
 )

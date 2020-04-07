@@ -1,78 +1,84 @@
 create table userfca (
-  userId      serial PRIMARY KEY,
-  login       varchar(50) not null,
-  email       varchar(100) not null,
-  pass        varchar(100) not null,
-  firstname   varchar(100),
-  lastname    varchar(100),
-  upper       integer references userfca (userid),
-  accesstoken varchar(50)
+  userId        serial PRIMARY KEY,
+  login         varchar(50) not null,
+  email         varchar(100) not null,
+  pass          varchar(100) not null,
+  firstname     varchar(100),
+  lastname      varchar(100),
+  accesstoken   varchar(50),
+  upper         integer references userfca (userId),
+  profilPic     integer,
+  userPosition  integer
 );
 
-create table fuzi
+create table plusun
 (
-  plusunid   serial PRIMARY KEY,
-  user1id    integer references userfca (userid),
-  user2id    integer references userfca (userid)
+  plusunId      serial PRIMARY KEY,
+  user1Id       integer references userfca (userId),
+  user2Id       integer references userfca (userId)
 );
 
 create table album(
-  albumid  serial PRIMARY KEY,
-  name      varchar(50),
-  owner     integer references userfca (userid)
+  albumId       serial PRIMARY KEY,
+  name          varchar(50),
+  owner         integer references userfca (userId)
 );
 
 create table picture(
-  pictureid  serial PRIMARY KEY,
-  name        varchar(50),
-  path        varchar(50),
-  album       integer references album(albumid)
+  pictureId     serial PRIMARY KEY,
+  name          varchar(50),
+  path          varchar(50),
+  album         integer references album(albumId)
 );
 
 create table posts(
-  postid   serial primary key,
-  title     varchar(50),
-  body      text,
-  date      date,
-  writer    integer references userfca (userid)
+  postId        serial primary key,
+  title         varchar(50),
+  body          text,
+  date          date,
+  writer        integer references userfca (userId)
 );
 
 create table postpics(
-  postpicsid  serial primary key,
-  postid       integer references posts(postid),
-  picsid       integer references picture(pictureid)
+  postpicsId    serial primary key,
+  postId        integer references posts(postId),
+  picsId        integer references picture(pictureId)
 );
 
 create table event(
-  eventid    serial primary key,
-  name        varchar(50),
-  date        date,
-  place       varchar(100),
-  description text,
-  eventpics  integer,
-  eventpost  integer references posts(postid)
+  eventId       serial primary key,
+  name          varchar(50),
+  startDate     date,
+  endDate     date,
+  place         varchar(100),
+  description   text,
+  eventpics     integer references picture(pictureId),
+  eventpost     integer references posts(postId)
 );
 
 create table position(
-  positionid   serial primary key,
-  userposition integer references userfca (userid),
+  positionId    serial primary key,
   latitude      double precision,
-  longitude     double precision
+  longitude     double precision,
+  positionUser  integer references userfca (userId)
 );
 
 create table bill(
-  billid serial primary key,
-  amount  integer,
-  date    date,
-  payer   integer references userfca (userid)
+  billId        serial primary key,
+  amount        double precision ,
+  date          date,
+  payer         integer references userfca (userId)
 );
 
 create type bottletype as enum ('Pastis', 'Get', 'Vodka', 'Rhum');
 
-create table bottle(
-  bottleid     serial primary key,
+create table bottlebill(
+  bottleBillId      serial primary key,
   quantity      integer,
   date          date,
-  bottletype   bottletype,
-  deliveryuser integer references userfca (userid)
+  bottleType    bottletype,
+  giver  integer references userfca (userId)
 );
+
+ALTER TABLE userfca ADD CONSTRAINT picture_fk FOREIGN KEY (profilPic) REFERENCES picture (pictureId);
+ALTER TABLE userfca ADD CONSTRAINT position_fk FOREIGN KEY (userPosition) REFERENCES position(positionId);

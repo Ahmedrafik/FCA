@@ -19,10 +19,11 @@ data class Event (
 
         val description:String?,
 
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "pictureId")
+        val eventPics: Picture,
+
         @OneToOne(mappedBy = "event")
         val postEvent: Posts,
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "pictureid")
-        val eventPics: Picture
 )

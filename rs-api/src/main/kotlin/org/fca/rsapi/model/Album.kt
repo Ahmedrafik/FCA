@@ -7,12 +7,12 @@ import javax.persistence.*
 data class Album (
 
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val albumid: Long?,
+        val albumId: Long?,
 
         val name: String?,
 
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "userid")
+        @JoinColumn(name = "userId")
         val owner: Userfca,
 
         @OneToMany(mappedBy = "album", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)

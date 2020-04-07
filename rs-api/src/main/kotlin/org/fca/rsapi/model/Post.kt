@@ -4,10 +4,10 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-data class Posts (
+data class Post (
 
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val postid: Long?,
+        val postId: Long?,
 
         val title: String,
 
@@ -16,16 +16,16 @@ data class Posts (
         val date: Date?,
 
         @ManyToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "userid")
+        @JoinColumn(name = "userId")
         val writer: Userfca,
 
         @OneToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(name = "eventid")
+        @JoinColumn(name = "eventId")
         val event: Event,
 
         @ManyToMany(cascade = [CascadeType.ALL])
         @JoinTable(name = "Post_Pics",
-                joinColumns = [JoinColumn(name = "postid", referencedColumnName = "postid")],
-                inverseJoinColumns = [JoinColumn(name = "pictureid", referencedColumnName = "pictureid")])
+                joinColumns = [JoinColumn(name = "postId", referencedColumnName = "postId")],
+                inverseJoinColumns = [JoinColumn(name = "pictureId", referencedColumnName = "pictureId")])
         var picsList: List<Picture> = mutableListOf()
 )

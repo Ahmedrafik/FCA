@@ -7,11 +7,13 @@ import javax.persistence.*
 data class BottleBill (
 
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val bottlebillid: Long?,
+        val bottleBillId: Long?,
 
-        val number: Int,
+        val quantity: Int,
 
         val date: Date?,
+
+        val bottleType: String?,
 
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "userid")

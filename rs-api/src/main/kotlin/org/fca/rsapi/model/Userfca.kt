@@ -18,25 +18,25 @@ data class Userfca (
 
         val lastname: String?,
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "userid")
-        val upper: Userfca?,
-
         val accessToken: String?,
 
-        @OneToMany(mappedBy = "upper", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val lowers: List<Userfca>,
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "userId")
+        val upper: Userfca?,
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "pictureId")
+        val profilePic: Picture?,
 
         @OneToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(name = "positionid")
+        @JoinColumn(name = "positionId")
         val position: Position,
+
+        @OneToMany(mappedBy = "upper", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        val lowerList: List<Userfca>,
 
         @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
         val albumList: List<Album>,
-
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "pictureid")
-        val profilePic: Picture?,
 
         @OneToMany(mappedBy = "writer", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
         val postList: List<Posts>,
@@ -49,8 +49,8 @@ data class Userfca (
 
         @ManyToMany(cascade = [CascadeType.ALL])
         @JoinTable(name = "Plus_Un",
-                joinColumns = [JoinColumn(name = "userid", referencedColumnName = "userid")],
-                inverseJoinColumns = [JoinColumn(name = "userid", referencedColumnName = "userid")])
+                joinColumns = [JoinColumn(name = "userId", referencedColumnName = "userId")],
+                inverseJoinColumns = [JoinColumn(name = "userId", referencedColumnName = "userId")])
         var plusUnList: List<Userfca> = mutableListOf()
 
 )
