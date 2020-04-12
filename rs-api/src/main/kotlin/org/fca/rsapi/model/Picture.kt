@@ -17,14 +17,12 @@ data class Picture (
         @JoinColumn(name = "albumId")
         var album: Album?,
 
-        @OneToOne(mappedBy = "profilepic")
-        val userProfile: Userfca,
+        @OneToMany(mappedBy = "profilePic", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        val userProfile: List<Userfca>,
 
         @ManyToMany(mappedBy = "picsList")
-        val postsList: List<Posts>,
+        val postsList: List<Post>,
 
         @OneToMany(mappedBy = "eventPics", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val eventList: List<Event>,
-
-
+        val eventList: List<Event>
 )

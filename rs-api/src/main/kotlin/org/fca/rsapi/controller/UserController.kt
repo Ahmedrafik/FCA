@@ -36,15 +36,16 @@ class UserController (private val userRepository: UserRepository) {
 
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     fun getUserById(@PathVariable(value = "id") userId: Long): ResponseEntity<Userfca> {
         return userRepository.findById(userId).map { user ->
             ResponseEntity.ok(user)
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @PostMapping("/getuser")
+    @GetMapping("/getuser")
     fun getUserByLogin(@Valid @RequestBody user: Userfca): Userfca? {
+        //{"login": "blackWidow","pass": "blackWidow"} in param
         var resUser : Userfca? = null
         val userList = userRepository.findAll()
         for(crtUser in userList){
@@ -60,8 +61,9 @@ class UserController (private val userRepository: UserRepository) {
         return resUser
     }
 
-    @PostMapping("/verifyToken")
+    @GetMapping("/verifyToken")
     fun getUserByToken(@Valid @RequestBody token: String): Userfca? {
+        //{"token":"0a09b1b18bd4414198c2924049f59f06"} in param
         var resUser : Userfca? = null
         val userList = userRepository.findAll()
         for(crtUser in userList){
@@ -83,7 +85,7 @@ class UserController (private val userRepository: UserRepository) {
 
         return userRepository.findById(userId).map { existingUser ->
             val updatedUser: Userfca = existingUser
-                    .copy(login = newUser.login, email = newUser.email, pass = newUser.pass, firstname = newUser.firstname, lastname = newUser.lastname, upper = newUser.upper, profilePic = newUser.profilePic)
+                    .copy(login = newUser.login, email = newUser.email, pass = newUser.pass, firstname = newUser.firstname, lastname = newUser.lastname, profilePic = newUser.profilePic)
             ResponseEntity.ok().body(userRepository.save(updatedUser))
         }.orElse(ResponseEntity.notFound().build())
 

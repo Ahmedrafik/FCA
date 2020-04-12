@@ -24,6 +24,6 @@ data class Event (
         val eventPics: Picture,
 
         @OneToOne(mappedBy = "event")
-        val postEvent: Posts,
+        val postEvent: Post
 
 )

@@ -77,17 +77,7 @@ class PostsController (private val userRepository: UserRepository) {
         return resUser
     }
 
-    @PutMapping("/users/{id}")
-    fun updateUserById(@PathVariable(value = "id") userId: Long,
-                       @Valid @RequestBody newUser: Userfca): ResponseEntity<Userfca> {
 
-        return userRepository.findById(userId).map { existingUser ->
-            val updatedUser: Userfca = existingUser
-                    .copy(login = newUser.login, email = newUser.email, pass = newUser.pass, firstname = newUser.firstname, lastname = newUser.lastname, upper = newUser.upper, profilePic = newUser.profilePic)
-            ResponseEntity.ok().body(userRepository.save(updatedUser))
-        }.orElse(ResponseEntity.notFound().build())
-
-    }
 
     @DeleteMapping("/users/{id}")
     fun deleteUserById(@PathVariable(value = "id") userId: Long): ResponseEntity<Void> {
