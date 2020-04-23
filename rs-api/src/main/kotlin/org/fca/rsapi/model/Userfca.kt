@@ -1,14 +1,15 @@
 package org.fca.rsapi.model
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.*
 
 @Entity
-data class Userfca (
+data class Userfca(
 
         @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val userId: Long,
+        val userId: Long?,
 
-        val login: String,
+        var login: String,
 
         val email: String?,
 
@@ -20,29 +21,11 @@ data class Userfca (
 
         var accessToken: String?,
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "pictureId")
-        val profilePic: Picture?,
-
-        @OneToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(name = "positionId")
-        val position: Position?,
-
-        @OneToMany(mappedBy = "upper", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val hierarchyList: List<Hierarchy>?,
-
-        @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val albumList: List<Album>?,
-
-        @OneToMany(mappedBy = "writer", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val postList: List<Post>?,
-
-        @OneToMany(mappedBy = "giver", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val bottleBillList: List<BottleBill>?,
-
-        @OneToMany(mappedBy = "payer", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-        val billList: List<Bill>?,
-
-        @OneToMany(mappedBy="me")
-        var plusUnList: List<PlusUn>?
-)
+        @OneToMany(mappedBy = "payer", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        @JsonManagedReference
+        var bills: List<Bill> = emptyList()
+) {
+        override fun toString(): String {
+                return "Userfca(userId=$userId, login='$login', email=$email, pass=$pass, firstname=$firstname, lastname=$lastname, accessToken=$accessToken)"
+        }
+}

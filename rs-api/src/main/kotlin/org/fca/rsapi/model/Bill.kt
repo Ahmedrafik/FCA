@@ -1,5 +1,6 @@
 package org.fca.rsapi.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import java.time.temporal.TemporalAmount
 import java.util.*
 import javax.persistence.*
@@ -15,6 +16,7 @@ data class Bill (
         val date: Date?,
 
         @ManyToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "userid")
-        val payer: Userfca
+        @JoinColumn(name = "user_id")
+        @JsonBackReference
+        var payer: Userfca? = null
 )

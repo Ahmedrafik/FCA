@@ -1,46 +1,66 @@
 package org.fca.rsapi.controller
 
+import org.fca.rsapi.dto.UserfcaDTO
 import org.fca.rsapi.helpers.UserHelper
+import org.fca.rsapi.mapper.UserFcaMapper
+import org.fca.rsapi.model.Bill
 import org.fca.rsapi.model.Userfca
+import org.fca.rsapi.repository.BillRepository
 import org.fca.rsapi.repository.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/user")
-class UserController (private val userRepository: UserRepository) {
+class UserController (private val userRepository: UserRepository, private val billRepository: BillRepository) {
 
     @GetMapping("/")
-    fun getAllUsers(): List<Userfca> =
+    fun getAll(): List<Userfca> =
             userRepository.findAll()
 
+    @GetMapping("/{id}")
+    fun getById(@PathVariable(value = "id") id: Long): ResponseEntity<Userfca> {
+        return userRepository.findById(id).map { user ->
+            ResponseEntity.ok(user)
+        }.orElse(ResponseEntity.notFound().build())
+    }
 
     @PostMapping("/")
-    fun createNewUser(@Valid @RequestBody user: Userfca): Userfca =
-            userRepository.save(user)
+    fun createNew(@Valid @RequestBody userfca: Userfca): ResponseEntity<Userfca> {
+        return ResponseEntity.ok(userRepository.save(userfca))
+    }
+
+    @PutMapping("/{id}")
+    fun updateById(@PathVariable(value = "id") id: Long,
+                   @Valid @RequestBody new: Userfca): ResponseEntity<Userfca> {
+        return userRepository.findById(id).map { existing ->
+            val updated: Userfca = existing
+                    .copy(login = new.login, email = new.email, pass = new.pass, firstname = new.firstname, lastname = new.lastname)
+            ResponseEntity.ok().body(userRepository.save(updated))
+        }.orElse(ResponseEntity.notFound().build())
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteById(@PathVariable(value = "id") id: Long): ResponseEntity<Void> {
+        return userRepository.findById(id).map { user  ->
+            userRepository.delete(user)
+            ResponseEntity<Void>(HttpStatus.OK)
+        }.orElse(ResponseEntity.notFound().build())
+    }
 
     @PutMapping("/validuser/{id}")
-    fun validUser(@PathVariable(value = "id") userId: Long): Userfca {
+    fun validUser(@PathVariable(value = "id") id: Long): Userfca {
         val userList = userRepository.findAll()
-        val user: Userfca = userRepository.findById(userId).get()
+        val user: Userfca = userRepository.findById(id).get()
         var accessToken = ""
         while(accessToken.isEmpty() || UserHelper.containsAccessToken(userList, accessToken)){
             accessToken = UserHelper.generateRandomToken()
         }
         user.accessToken = accessToken
-
         return userRepository.save(user)
-
-
-    }
-
-    @GetMapping("/{id}")
-    fun getUserById(@PathVariable(value = "id") userId: Long): ResponseEntity<Userfca> {
-        return userRepository.findById(userId).map { user ->
-            ResponseEntity.ok(user)
-        }.orElse(ResponseEntity.notFound().build())
     }
 
     @GetMapping("/getuser")
@@ -79,26 +99,4 @@ class UserController (private val userRepository: UserRepository) {
         return resUser
     }
 
-    @PutMapping("/users/{id}")
-    fun updateUserById(@PathVariable(value = "id") userId: Long,
-                       @Valid @RequestBody newUser: Userfca): ResponseEntity<Userfca> {
-
-        return userRepository.findById(userId).map { existingUser ->
-            val updatedUser: Userfca = existingUser
-                    .copy(login = newUser.login, email = newUser.email, pass = newUser.pass, firstname = newUser.firstname, lastname = newUser.lastname, profilePic = newUser.profilePic)
-            ResponseEntity.ok().body(userRepository.save(updatedUser))
-        }.orElse(ResponseEntity.notFound().build())
-
-    }
-
-    @DeleteMapping("/users/{id}")
-    fun deleteUserById(@PathVariable(value = "id") userId: Long): ResponseEntity<Void> {
-
-        return userRepository.findById(userId).map { user  ->
-            userRepository.delete(user)
-            ResponseEntity<Void>(HttpStatus.OK)
-        }.orElse(ResponseEntity.notFound().build())
-
-    }
-    
 }
