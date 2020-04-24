@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 data class Bill (
 
-        @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val billId: Long?,
 
         val amount: Double,

@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity
 data class Userfca(
 
-        @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val userId: Long?,
 
         var login: String,
