@@ -19,4 +19,8 @@ data class Bill (
         @JoinColumn(name = "payer")
         @JsonBackReference
         var payer: Userfca? = null
-)
+) {
+        override fun toString(): String {
+                return "Bill(billId=$billId, amount=$amount, date=$date, payer=$payer)"
+        }
+}
