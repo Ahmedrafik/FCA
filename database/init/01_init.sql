@@ -22,3 +22,10 @@ create table bottle_bill(
   bottle_type       integer,
   giver             integer references userfca (user_id)
 );
+
+create table position(
+  position_id       serial primary key,
+  latitude          double precision,
+  longitude         double precision,
+  position_user     integer references userfca (user_id)
+);
