@@ -51,8 +51,7 @@ class BillController (private val billRepository: BillRepository, private val us
     }
 
     @DeleteMapping("/{id}")
-    fun deleteUserById(@PathVariable(value = "id") id: Long): ResponseEntity<Void> {
-
+    fun deleteById(@PathVariable(value = "id") id: Long): ResponseEntity<Void> {
         return billRepository.findById(id).map { bill  ->
             billRepository.delete(bill)
             ResponseEntity<Void>(HttpStatus.OK)

@@ -1,22 +1,25 @@
 package org.fca.rsapi.model
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import org.fca.rsapi.enum.BottleType
 import java.time.temporal.TemporalAmount
 import java.util.*
 import javax.persistence.*
 
 @Entity
-data class Bill (
+data class BottleBill (
 
-        @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val billId: Long?,
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val bottleBillId: Long?,
 
-        val amount: Double,
+        val quantity: Int,
 
         val date: Date?,
 
+        val bottleType:Int,
+
         @ManyToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name = "payer")
+        @JoinColumn(name = "giver")
         @JsonBackReference
-        var payer: Userfca? = null
+        var giver:Userfca? = null
 )

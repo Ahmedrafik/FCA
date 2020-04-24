@@ -21,9 +21,14 @@ data class Userfca(
 
         var accessToken: String?,
 
-        @OneToMany(mappedBy = "payer", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        @OneToMany(mappedBy = "payer", cascade = [CascadeType.ALL])
         @JsonManagedReference
-        var bills: List<Bill> = emptyList()
+        var bills: List<Bill> = emptyList(),
+
+        @OneToMany(mappedBy = "giver", cascade = [CascadeType.ALL])
+        @JsonManagedReference
+        var bottleBills: List<BottleBill> = emptyList()
+
 ) {
         override fun toString(): String {
                 return "Userfca(userId=$userId, login='$login', email=$email, pass=$pass, firstname=$firstname, lastname=$lastname, accessToken=$accessToken)"

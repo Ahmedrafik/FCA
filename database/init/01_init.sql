@@ -1,11 +1,11 @@
 create table userfca (
-  user_id           bigint PRIMARY KEY,
+  user_id           serial PRIMARY KEY,
   login             varchar(50) not null,
   email             varchar(100) not null,
   pass              varchar(100) not null,
   firstname         varchar(100),
   lastname          varchar(100),
-  accesstoken       varchar(50)
+  access_token      varchar(100)
 );
 
 create table bill(
@@ -15,12 +15,10 @@ create table bill(
   payer             integer references userfca (user_id)
 );
 
-create type bottletype as enum ('Pastis', 'Get', 'Vodka', 'Rhum');
-
-create table bottlebill(
+create table bottle_bill(
   bottle_bill_id    serial primary key,
   quantity          integer,
   date              date,
-  bottle_type       bottletype,
+  bottle_type       integer,
   giver             integer references userfca (user_id)
 );
