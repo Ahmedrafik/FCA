@@ -4,7 +4,6 @@ import org.fca.rsapi.dto.AlbumDTO
 import org.fca.rsapi.model.Album
 import org.fca.rsapi.repository.AlbumRepository
 import org.fca.rsapi.service.AlbumService
-import org.fca.rsapi.service.PositionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -55,10 +54,10 @@ class AlbumController (private val albumRepository: AlbumRepository, private val
     }
 
     @GetMapping("/user/{id}")
-    fun getByUserId(@PathVariable(value = "id") id: Long): ResponseEntity<Album> {
+    fun getByUserId(@PathVariable(value = "id") id: Long): ResponseEntity<List<Album>> {
         val res = albumService.getByUserId(id)
-        return if (res ==null){
-            ResponseEntity<Album>(HttpStatus.NOT_FOUND)
+        return if (res.isEmpty()){
+            ResponseEntity<List<Album>>(HttpStatus.NOT_FOUND)
         }
         else{
             ResponseEntity.ok(res)

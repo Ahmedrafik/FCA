@@ -11,13 +11,12 @@ import org.springframework.stereotype.Service
 @Service
 class AlbumService(private val albumRepository: AlbumRepository, private val userRepository: UserRepository)  {
 
-    fun getByUserId(id:Long?):Album? {
-        var res : Album? = null
+    fun getByUserId(id:Long?):List<Album> {
+        val res : MutableList<Album> = ArrayList()
         val list = albumRepository.findAll()
         for(crt in list){
             if(id == crt.owner?.userId){
-                res = crt
-                break
+                res += crt
             }
         }
         return res
