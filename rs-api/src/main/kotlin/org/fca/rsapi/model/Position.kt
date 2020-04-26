@@ -1,5 +1,6 @@
 package org.fca.rsapi.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.*
 
@@ -15,7 +16,8 @@ data class Position(
 
         @OneToOne
         @JoinColumn(name = "position_user")
-        val positionUser: Userfca? = null
+        @JsonBackReference
+        var positionUser: Userfca? = null
 
 ) {
         override fun toString(): String {

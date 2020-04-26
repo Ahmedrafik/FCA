@@ -27,5 +27,6 @@ create table position(
   position_id       serial primary key,
   latitude          double precision,
   longitude         double precision,
-  position_user     integer references userfca (user_id)
+  position_user     integer references userfca (user_id),
+  UNIQUE (position_user)
 );

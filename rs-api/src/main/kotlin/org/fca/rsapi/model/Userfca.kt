@@ -22,6 +22,7 @@ data class Userfca(
         var accessToken: String?,
 
         @OneToOne(mappedBy = "positionUser")
+        @JsonManagedReference
         val position: Position? = null,
 
         @OneToMany(mappedBy = "payer", cascade = [CascadeType.ALL])
