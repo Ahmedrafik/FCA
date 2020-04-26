@@ -32,7 +32,14 @@ create table position(
 );
 
 create table album(
-  album_id       serial PRIMARY KEY,
-  name          varchar(50),
-  owner         integer references userfca (user_id)
+  album_id          serial PRIMARY KEY,
+  name              varchar(50),
+  owner             integer references userfca (user_id)
+);
+
+create table picture(
+  picture_id        serial PRIMARY KEY,
+  name              varchar(50),
+  path              varchar(50),
+  album             integer references album(album_id)
 );
