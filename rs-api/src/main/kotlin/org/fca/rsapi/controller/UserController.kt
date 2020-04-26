@@ -1,21 +1,16 @@
 package org.fca.rsapi.controller
 
-import org.fca.rsapi.dto.UserfcaDTO
 import org.fca.rsapi.helpers.UserHelper
-import org.fca.rsapi.mapper.UserFcaMapper
-import org.fca.rsapi.model.Bill
 import org.fca.rsapi.model.Userfca
-import org.fca.rsapi.repository.BillRepository
 import org.fca.rsapi.repository.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/user")
-class UserController (private val userRepository: UserRepository, private val billRepository: BillRepository) {
+class UserController(private val userRepository: UserRepository) {
 
     @GetMapping("/")
     fun getAll(): List<Userfca> =
