@@ -31,7 +31,11 @@ data class Userfca(
 
         @OneToMany(mappedBy = "giver", cascade = [CascadeType.ALL])
         @JsonManagedReference
-        var bottleBills: List<BottleBill> = emptyList()
+        var bottleBills: List<BottleBill> = emptyList(),
+
+        @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL])
+        @JsonManagedReference
+        var albumList: List<Album> = emptyList()
 
 ) {
         override fun toString(): String {
