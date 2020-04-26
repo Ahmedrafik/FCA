@@ -30,3 +30,9 @@ create table position(
   position_user     integer references userfca (user_id),
   UNIQUE (position_user)
 );
+
+create table album(
+  album_id       serial PRIMARY KEY,
+  name          varchar(50),
+  owner         integer references userfca (user_id)
+);
