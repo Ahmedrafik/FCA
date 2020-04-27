@@ -33,6 +33,10 @@ data class Userfca(
         @JsonManagedReference
         var bottleBills: List<BottleBill> = emptyList(),
 
+        @OneToMany(mappedBy = "writer", cascade = [CascadeType.ALL])
+        @JsonManagedReference
+        var postList: List<Post> = emptyList(),
+
         @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL])
         @JsonManagedReference
         var albumList: List<Album> = emptyList()
