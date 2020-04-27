@@ -43,3 +43,17 @@ create table picture(
   path              varchar(50),
   album             integer references album(album_id)
 );
+
+create table posts(
+  post_id        serial primary key,
+  title         varchar(50),
+  body          text,
+  date          date,
+  writer        integer references userfca (user_id)
+);
+
+create table postpics(
+  postpics_id    serial primary key,
+  post_id        integer references posts(post_id),
+  pics_id        integer references picture(picture_id)
+);

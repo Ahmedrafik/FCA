@@ -18,4 +18,7 @@ INSERT INTO public.album ("name","owner") VALUES ('Annif Hulk',1);
 INSERT INTO public.album ("name","owner") VALUES ('Assemblée avengers',2);
 INSERT INTO public.album ("name","owner") VALUES ('Black Widow Top less',2);
 INSERT INTO public.album ("name","owner") VALUES ('Intégration Spiderman',2);
-;
+
+INSERT INTO public.picture (name,"path",album) VALUES ('Intégration Spiderman 1','/appli/FCA/pics/spiderman/1.jpg',5);
+INSERT INTO public.picture (name,"path",album) VALUES ('Intégration Spiderman 2','/appli/FCA/pics/spiderman/2.jpg',5);
+INSERT INTO public.picture (name,"path",album) VALUES ('Encierro1','/appli/FCA/pics/feteACastries1/1.jpg',1);
