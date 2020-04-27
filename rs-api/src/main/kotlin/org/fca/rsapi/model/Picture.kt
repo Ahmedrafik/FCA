@@ -16,7 +16,11 @@ data class Picture (
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "album")
         @JsonBackReference
-        var album: Album? = null
+        var album: Album? = null,
+
+        @ManyToMany(mappedBy = "picsList")
+        @JsonBackReference
+        val postList: List<Post>? = ArrayList()
 ) {
         override fun toString(): String {
                 return "Picture(pictureId=$pictureId, name='$name', path='$path', album=$album)"
