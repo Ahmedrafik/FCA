@@ -27,8 +27,8 @@ class AlbumController (private val albumRepository: AlbumRepository, private val
 
     @GetMapping("/{id}")
     fun getById(@PathVariable(value = "id") id: Long): ResponseEntity<Album> {
-        return albumRepository.findById(id).map { bill ->
-            ResponseEntity.ok(bill)
+        return albumRepository.findById(id).map { album ->
+            ResponseEntity.ok(album)
         }.orElse(ResponseEntity.notFound().build())
 
     }
@@ -47,8 +47,8 @@ class AlbumController (private val albumRepository: AlbumRepository, private val
 
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable(value = "id") id: Long): ResponseEntity<Void> {
-        return albumRepository.findById(id).map { bill  ->
-            albumRepository.delete(bill)
+        return albumRepository.findById(id).map { album  ->
+            albumRepository.delete(album)
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
     }
