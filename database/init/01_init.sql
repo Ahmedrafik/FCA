@@ -52,7 +52,7 @@ create table post(
   writer        integer references userfca (user_id)
 );
 
-create table postpics(
+create table post_pics(
   postpics_id    serial primary key,
   post_id        integer references post(post_id),
   pics_id        integer references picture(picture_id)
