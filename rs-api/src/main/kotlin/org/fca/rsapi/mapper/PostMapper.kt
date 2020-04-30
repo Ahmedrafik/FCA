@@ -7,6 +7,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class PostMapper {
     companion object {
@@ -18,7 +19,11 @@ class PostMapper {
 
         fun mapper(post: Post): PostDTO {
             val date = SimpleDateFormat("dd/MM/yyyy").format(post.date)
-            return PostDTO(post.postId, post.title,post.body, date, post.writer?.userId)
+            val picList = ArrayList<Long?>()
+            post.picsList.forEach {
+                picList += it.pictureId
+            }
+            return PostDTO(post.postId, post.title,post.body, date, post.writer?.userId, picList)
 
         }
     }

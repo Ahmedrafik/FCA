@@ -1,6 +1,6 @@
 package org.fca.rsapi.dto
 
-data class PostDTO (
+data class PostDTO(
 
         val postId: Long?,
 
@@ -10,5 +10,7 @@ data class PostDTO (
 
         val date: String,
 
-        var writer: Long?
+        var writer: Long?,
+
+        val picsList: ArrayList<Long?> = ArrayList()
 )

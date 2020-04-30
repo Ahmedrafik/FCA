@@ -2,7 +2,9 @@ package org.fca.rsapi.controller
 
 import org.fca.rsapi.dto.PostDTO
 import org.fca.rsapi.model.Post
+import org.fca.rsapi.repository.PictureRepository
 import org.fca.rsapi.repository.PostRepository
+import org.fca.rsapi.repository.UserRepository
 import org.fca.rsapi.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,7 +13,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/post")
-class PostController (private val postRepository: PostRepository, private val albumService: PostService) {
+class PostController (private val postRepository: PostRepository, private val postService: PostService,private val userRepository: UserRepository, private val pictureRepository: PictureRepository) {
 
     @GetMapping("/")
     fun getAll(): List<Post> =
@@ -20,7 +22,7 @@ class PostController (private val postRepository: PostRepository, private val al
 
     @PostMapping("/")
     fun createNew(@Valid @RequestBody dto: PostDTO): ResponseEntity<Post> {
-        return ResponseEntity.ok(albumService.save(dto))
+        return ResponseEntity.ok(postService.save(dto))
     }
 
 
@@ -55,7 +57,7 @@ class PostController (private val postRepository: PostRepository, private val al
 
     @GetMapping("/user/{id}")
     fun getByUserId(@PathVariable(value = "id") id: Long): ResponseEntity<List<Post>> {
-        val res = albumService.getByUserId(id)
+        val res = postService.getByUserId(id)
         return if (res.isEmpty()){
             ResponseEntity<List<Post>>(HttpStatus.NOT_FOUND)
         }
@@ -63,7 +65,5 @@ class PostController (private val postRepository: PostRepository, private val al
             ResponseEntity.ok(res)
         }
     }
-
-
     
 }

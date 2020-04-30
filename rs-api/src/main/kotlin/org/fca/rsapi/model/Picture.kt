@@ -20,7 +20,7 @@ data class Picture (
 
         @ManyToMany(mappedBy = "picsList")
         @JsonBackReference
-        val postList: List<Post>? = ArrayList()
+        var postList: List<Post> = emptyList()
 ) {
         override fun toString(): String {
                 return "Picture(pictureId=$pictureId, name='$name', path='$path', album=$album)"

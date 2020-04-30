@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.util.*
 import javax.persistence.*
-import kotlin.collections.ArrayList
 
 @Entity
 data class Post (
@@ -23,12 +22,12 @@ data class Post (
         @JsonBackReference
         var writer: Userfca? = null,
 
-        @ManyToMany(cascade = [CascadeType.ALL])
-        @JoinTable(name = "postpics",
-                joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "post_id")],
-                inverseJoinColumns = [JoinColumn(name = "pics_id", referencedColumnName = "picture_id")])
+        @ManyToMany
+        @JoinTable(name = "post_pics",
+                joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "postId")],
+                inverseJoinColumns = [JoinColumn(name = "pics_id", referencedColumnName = "pictureId")])
         @JsonManagedReference
-        val picsList: List<Picture> = ArrayList()
+        var picsList: List<Picture> = emptyList()
 ) {
         override fun toString(): String {
                 return "Post(postId=$postId, title='$title', body='$body', date=$date, writer=$writer)"
