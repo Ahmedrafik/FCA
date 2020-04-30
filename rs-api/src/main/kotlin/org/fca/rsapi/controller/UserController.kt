@@ -1,8 +1,10 @@
 package org.fca.rsapi.controller
 
+import org.fca.rsapi.dto.UserfcaDTO
 import org.fca.rsapi.helpers.UserHelper
 import org.fca.rsapi.model.Userfca
 import org.fca.rsapi.repository.UserRepository
+import org.fca.rsapi.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -10,7 +12,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/user")
-class UserController(private val userRepository: UserRepository) {
+class UserController(private val userRepository: UserRepository, private val userService: UserService) {
 
     @GetMapping("/")
     fun getAll(): List<Userfca> =
@@ -24,8 +26,8 @@ class UserController(private val userRepository: UserRepository) {
     }
 
     @PostMapping("/")
-    fun createNew(@Valid @RequestBody userfca: Userfca): ResponseEntity<Userfca> {
-        return ResponseEntity.ok(userRepository.save(userfca))
+    fun createNew(@Valid @RequestBody userfcaDTO: UserfcaDTO): ResponseEntity<Userfca> {
+        return ResponseEntity.ok(userService.save(userfcaDTO))
     }
 
     @PutMapping("/{id}")

@@ -1,5 +1,6 @@
 package org.fca.rsapi.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.*
 
@@ -39,8 +40,16 @@ data class Userfca(
 
         @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL])
         @JsonManagedReference
-        var albumList: List<Album> = emptyList()
+        var albumList: List<Album> = emptyList(),
 
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "upper")
+        @JsonBackReference
+        var upper: Userfca? = null,
+
+        @OneToMany(mappedBy = "upper", cascade = [CascadeType.ALL])
+        @JsonManagedReference
+        var lowerList: List<Userfca> = emptyList()
 ) {
         override fun toString(): String {
                 return "Userfca(userId=$userId, login='$login', email=$email, pass=$pass, firstname=$firstname, lastname=$lastname, accessToken=$accessToken)"

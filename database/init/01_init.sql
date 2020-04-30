@@ -5,7 +5,8 @@ create table userfca (
   pass              varchar(100) not null,
   firstname         varchar(100),
   lastname          varchar(100),
-  access_token      varchar(100)
+  access_token      varchar(100),
+  upper             integer references userfca (user_id)
 );
 
 create table bill(
