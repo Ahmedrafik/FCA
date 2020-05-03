@@ -58,3 +58,9 @@ create table post_pics(
   post_id        integer references post(post_id),
   pics_id        integer references picture(picture_id)
 );
+
+create table plus_un(
+    plusun_id   serial primary key,
+    user1_id    integer references userfca(user_id),
+    user2_id    integer references userfca(user_id)
+);
