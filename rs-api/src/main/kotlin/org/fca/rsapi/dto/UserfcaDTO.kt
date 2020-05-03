@@ -16,5 +16,7 @@ data class UserfcaDTO (
 
         var accessToken: String?,
 
-        val upper: Long?
+        val upper: Long?,
+
+        val plusUnList: ArrayList<Long?> = ArrayList()
 )

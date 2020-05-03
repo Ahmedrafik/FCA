@@ -49,7 +49,14 @@ data class Userfca(
 
         @OneToMany(mappedBy = "upper", cascade = [CascadeType.ALL])
         @JsonManagedReference
-        var lowerList: List<Userfca> = emptyList()
+        var lowerList: List<Userfca> = emptyList(),
+
+        @ManyToMany
+        @JoinTable(name = "plus_un",
+                joinColumns = [JoinColumn(name = "user1_id", referencedColumnName = "userId")],
+                inverseJoinColumns = [JoinColumn(name = "user2_id", referencedColumnName = "userId")])
+        @JsonManagedReference
+        var plusUnList: List<Userfca> = emptyList()
 ) {
         override fun toString(): String {
                 return "Userfca(userId=$userId, login='$login', email=$email, pass=$pass, firstname=$firstname, lastname=$lastname, accessToken=$accessToken)"
