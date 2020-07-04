@@ -1,6 +1,7 @@
 package org.fca.rsapi.controller
 
 import org.fca.rsapi.dto.UserfcaDTO
+import org.fca.rsapi.exception.NotFoundException
 import org.fca.rsapi.helpers.UserHelper
 import org.fca.rsapi.model.Userfca
 import org.fca.rsapi.repository.UserRepository
@@ -60,22 +61,24 @@ class UserController(private val userRepository: UserRepository, private val use
         return userRepository.save(user)
     }
 
-    @GetMapping("/getuser")
-    fun getUserByLogin(@Valid @RequestBody user: Userfca): Userfca? {
+    @PostMapping("/verifyAccess")
+    fun getUserByLogin(@Valid @RequestBody user: UserfcaDTO): ResponseEntity<*>? {
         //{"login": "blackWidow","pass": "blackWidow"} in param
         var resUser : Userfca? = null
+        var response : ResponseEntity<*>? = null
         val userList = userRepository.findAll()
         for(crtUser in userList){
-            if(user.login == crtUser.login && user.pass == crtUser.pass){
+            if(user.login == crtUser.login && user.pass == crtUser.pass && crtUser.accessToken != null){
                 resUser = crtUser
                 resUser.pass = null
+                response = ResponseEntity.ok(crtUser)
                 break
             }
         }
         if (resUser == null) {
-            throw Exception("Le login/pass entré ne correspondent à aucun utilisateur validé.")
+            throw NotFoundException("Le login/pass entré ne correspondent à aucun utilisateur validé.")
         }
-        return resUser
+        return response
     }
 
     @GetMapping("/verifyToken")
@@ -91,7 +94,7 @@ class UserController(private val userRepository: UserRepository, private val use
             }
         }
         if (resUser == null) {
-            throw Exception("Le token entré ne correspondent à aucun utilisateur validé.")
+            throw NotFoundException("Le token entré ne correspondent à aucun utilisateur validé.")
         }
         return resUser
     }

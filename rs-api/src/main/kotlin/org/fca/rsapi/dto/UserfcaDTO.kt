@@ -2,7 +2,7 @@ package org.fca.rsapi.dto
 
 data class UserfcaDTO (
 
-        val userId: Long,
+        val userId: Long?,
 
         val login: String,
 
