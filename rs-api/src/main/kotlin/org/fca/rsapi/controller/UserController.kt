@@ -62,7 +62,7 @@ class UserController(private val userRepository: UserRepository, private val use
     }
 
     @PostMapping("/verifyAccess")
-    fun getUserByLogin(@Valid @RequestBody user: UserfcaDTO): ResponseEntity<*>? {
+    fun checkUserByLogin(@Valid @RequestBody user: UserfcaDTO): ResponseEntity<*>? {
         //{"login": "blackWidow","pass": "blackWidow"} in param
         var resUser : Userfca? = null
         var response : ResponseEntity<*>? = null
@@ -81,8 +81,8 @@ class UserController(private val userRepository: UserRepository, private val use
         return response
     }
 
-    @GetMapping("/verifyToken")
-    fun getUserByToken(@Valid @RequestBody token: String): Userfca? {
+    @PostMapping("/verifyToken")
+    fun checkUserByToken(@Valid @RequestBody token: String): Userfca? {
         //{"token":"0a09b1b18bd4414198c2924049f59f06"} in param
         var resUser : Userfca? = null
         val userList = userRepository.findAll()
