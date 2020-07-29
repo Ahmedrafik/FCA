@@ -1,6 +1,6 @@
 create table userfca (
   user_id           serial PRIMARY KEY,
-  login             varchar(50) not null,
+  login             varchar(50) not null unique,
   email             varchar(100) not null,
   pass              varchar(100) not null,
   firstname         varchar(100),

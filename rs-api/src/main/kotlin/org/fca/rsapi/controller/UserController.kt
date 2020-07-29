@@ -63,14 +63,13 @@ class UserController(private val userRepository: UserRepository, private val use
 
     @PostMapping("/verifyAccess")
     fun checkUserByLogin(@Valid @RequestBody user: UserfcaDTO): ResponseEntity<*>? {
-        //{"login": "blackWidow","pass": "blackWidow"} in param
+        //{"login": "blackWidow"} in param
         var resUser : Userfca? = null
         var response : ResponseEntity<*>? = null
         val userList = userRepository.findAll()
         for(crtUser in userList){
-            if(user.login == crtUser.login && user.pass == crtUser.pass && crtUser.accessToken != null){
+            if(user.login == crtUser.login && crtUser.accessToken != null){
                 resUser = crtUser
-                resUser.pass = null
                 response = ResponseEntity.ok(crtUser)
                 break
             }
