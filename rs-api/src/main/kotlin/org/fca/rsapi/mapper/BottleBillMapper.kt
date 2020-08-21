@@ -17,16 +17,11 @@ class BottleBillMapper {
         fun mapper(bottlebillDTO: BottleBillDTO): BottleBill{
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
             val date = Date.from(LocalDate.parse(bottlebillDTO.date, formatter).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-            val bottleType = BottleType.getBottleTypeByType(bottlebillDTO.bottleType)
-            return BottleBill(bottlebillDTO.bottleBillId, bottlebillDTO.quantity, date, bottleType.value)
+            return BottleBill(bottlebillDTO.bottleBillId, bottlebillDTO.quantity, date)
         }
         fun mapper(bottleBill: BottleBill): BottleBillDTO{
             val date = SimpleDateFormat("dd/MM/yyyy").format(bottleBill.date)
-            val bottleType = BottleType.getBottleTypeByvalue(bottleBill.bottleType)
-            if (bottleType != null) {
-                return BottleBillDTO(bottleBill.bottleBillId, bottleBill.quantity, date, bottleType.name, bottleBill.giver?.userId)
-            }
-            else throw NotFoundException("There is no bottleType with value ${bottleBill.bottleType}")
+            return BottleBillDTO(bottleBill.bottleBillId, bottleBill.giver?.login, bottleBill.quantity, date, bottleBill.giver?.color)
         }
     }
 

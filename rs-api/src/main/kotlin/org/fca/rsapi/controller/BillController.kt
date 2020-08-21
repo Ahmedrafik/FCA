@@ -1,11 +1,13 @@
 package org.fca.rsapi.controller
 
 import org.fca.rsapi.dto.BillDTO
+import org.fca.rsapi.dto.BillDateDTO
 import org.fca.rsapi.mapper.BillMapper
 import org.fca.rsapi.model.Bill
 import org.fca.rsapi.model.Userfca
 import org.fca.rsapi.repository.BillRepository
 import org.fca.rsapi.repository.UserRepository
+import org.fca.rsapi.service.BillService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,7 +15,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/bill")
-class BillController (private val billRepository: BillRepository, private val userRepository: UserRepository) {
+class BillController (private val billRepository: BillRepository, private val billService: BillService, private val userRepository: UserRepository) {
 
     @GetMapping("/")
     fun getAll(): List<Bill> =
@@ -59,6 +61,10 @@ class BillController (private val billRepository: BillRepository, private val us
 
     }
 
+    @GetMapping("/billsFormated")
+    fun getFormatedBills(): ResponseEntity<BillDateDTO> {
+        return ResponseEntity.ok(billService.getPromBillsbyDates())
+    }
 
     
 }

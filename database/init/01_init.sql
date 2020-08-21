@@ -6,6 +6,7 @@ create table userfca (
   firstname         varchar(100),
   lastname          varchar(100),
   access_token      varchar(100),
+  color             varchar (20),
   upper             integer references userfca (user_id)
 );
 

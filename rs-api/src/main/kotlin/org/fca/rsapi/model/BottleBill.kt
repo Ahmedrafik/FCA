@@ -16,14 +16,12 @@ data class BottleBill (
 
         val date: Date?,
 
-        val bottleType:Int,
-
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "giver")
         @JsonBackReference
         var giver:Userfca? = null
 ) {
         override fun toString(): String {
-                return "BottleBill(bottleBillId=$bottleBillId, quantity=$quantity, date=$date, bottleType=$bottleType, giver=$giver)"
+                return "BottleBill(bottleBillId=$bottleBillId, quantity=$quantity, date=$date, giver=$giver)"
         }
 }

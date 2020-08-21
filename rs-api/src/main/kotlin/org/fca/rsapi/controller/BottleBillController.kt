@@ -6,6 +6,8 @@ import org.fca.rsapi.model.BottleBill
 import org.fca.rsapi.model.Userfca
 import org.fca.rsapi.repository.BottleBillRepository
 import org.fca.rsapi.repository.UserRepository
+import org.fca.rsapi.service.BillService
+import org.fca.rsapi.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,22 +15,18 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/bottlebill")
-class BottleBillController (private val bottlebillRepository: BottleBillRepository, private val userRepository: UserRepository) {
+class BottleBillController (private val bottlebillRepository: BottleBillRepository,  private val billService: BillService, private val userService: UserService) {
 
     @GetMapping("/")
     fun getAll(): ResponseEntity<List<BottleBillDTO>> {
-        val bottleBillDTOs = emptyList<BottleBillDTO>().toMutableList()
-        bottlebillRepository.findAll().forEach {
-            bottleBillDTOs += BottleBillMapper.mapper(it)
-        }
-        return ResponseEntity.ok(bottleBillDTOs)
+        return ResponseEntity.ok(billService.getBottleBillGroupByUser())
     }
 
 
 
     @PostMapping("/")
     fun createNew(@Valid @RequestBody dto: BottleBillDTO): ResponseEntity<BottleBill> {
-        val giver: Userfca? = dto.giver?.let { userRepository.getOne(it) }
+        val giver: Userfca? = dto.name?.let { userService.getByLogin(it) }
         val bottleBill = BottleBillMapper.mapper(dto)
         bottleBill.giver = giver
         return ResponseEntity.ok(bottlebillRepository.save(bottleBill))
@@ -50,7 +48,7 @@ class BottleBillController (private val bottlebillRepository: BottleBillReposito
 
         return bottlebillRepository.findById(id).map { existing ->
             val updated: BottleBill = existing
-                    .copy(quantity = new.quantity, date = new.date, giver = new.giver, bottleType = new.bottleType)
+                    .copy(quantity = new.quantity, date = new.date, giver = new.giver)
             ResponseEntity.ok().body(bottlebillRepository.save(updated))
         }.orElse(ResponseEntity.notFound().build())
 

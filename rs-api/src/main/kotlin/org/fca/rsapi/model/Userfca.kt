@@ -22,6 +22,8 @@ data class Userfca(
 
         var accessToken: String?,
 
+        var color: String?,
+
         @OneToOne(mappedBy = "positionUser")
         @JsonManagedReference
         val position: Position? = null,

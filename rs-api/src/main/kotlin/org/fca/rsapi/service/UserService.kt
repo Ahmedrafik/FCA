@@ -31,4 +31,15 @@ class UserService(private val userRepository: UserRepository)  {
         }
         return userRepository.save(user)
     }
+
+    fun getByLogin(login:String?):Userfca? {
+        var res : Userfca? = null
+        val list = userRepository.findAll()
+        for(crt in list){
+            if(login == crt.login){
+                res = crt
+            }
+        }
+        return res
+    }
 }
