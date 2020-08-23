@@ -8,6 +8,7 @@ import org.fca.rsapi.model.Userfca
 import org.fca.rsapi.repository.BillRepository
 import org.fca.rsapi.repository.UserRepository
 import org.fca.rsapi.service.BillService
+import org.fca.rsapi.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,7 +16,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/bill")
-class BillController (private val billRepository: BillRepository, private val billService: BillService, private val userRepository: UserRepository) {
+class BillController (private val billRepository: BillRepository, private val billService: BillService, private val userService: UserService) {
 
     @GetMapping("/")
     fun getAll(): List<Bill> =
@@ -24,7 +25,7 @@ class BillController (private val billRepository: BillRepository, private val bi
 
     @PostMapping("/")
     fun createNew(@Valid @RequestBody dto: BillDTO): ResponseEntity<Bill> {
-        val payer: Userfca? = dto.payer?.let { userRepository.getOne(it) }
+        val payer: Userfca? = dto.payer?.let { userService.getByLogin(it) }
         val bill = BillMapper.mapper(dto)
         bill.payer = payer
         return ResponseEntity.ok(billRepository.save(bill))

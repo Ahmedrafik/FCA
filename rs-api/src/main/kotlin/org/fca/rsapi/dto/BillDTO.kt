@@ -8,5 +8,5 @@ data class BillDTO (
 
         val date: String?,
 
-        var payer: Long?
+        var payer: String?
 )
